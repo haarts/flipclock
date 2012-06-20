@@ -38,12 +38,24 @@ void setup() {
 
 void loop(){
   int currentMinute = getCurrentMinute();
+  int currentSecond = getCurrentSecond();
+
   logWithFlush(String(currentMinute));
   if (currentMinute - 1 == lastSeenMinute ) {
     flipClock(currentMinute);
   }
+
   lastSeenMinute = currentMinute;
-  Sleepy::loseSomeTime(1000);
+  lastSeenSecond = currentSecond;
+  sleepForAwhile(currentSecond);
+}
+
+void sleepForAwhile(int second) {
+  int sleepTime = (int)(1000 * (0.5 * (float) (60 - second)));
+  logWithFlush(String(sleepTime));
+  sleepTime = max(sleepTime, 1000);
+
+  Sleepy::loseSomeTime(sleepTime);
 }
 
 int getCurrentMinute(){

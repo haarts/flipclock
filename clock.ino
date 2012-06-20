@@ -8,6 +8,7 @@ RTC_DS1307 RTC;
 ISR(WDT_vect) { Sleepy::watchdogEvent(); }
 
 int lastSeenMinute;
+int lastSeenSecond;
 #define controlPin1 8
 #define controlPin2 9
 #define enablePin 10
@@ -32,6 +33,7 @@ void setup() {
   digitalWrite(controlPin2, LOW);
 
   lastSeenMinute = getCurrentMinute();
+  lastSeenSecond = getCurrentSecond();
 }
 
 void loop(){
@@ -47,6 +49,11 @@ void loop(){
 int getCurrentMinute(){
   DateTime now = RTC.now();
   return now.minute();
+}
+
+int getCurrentSecond(){
+  DateTime now = RTC.now();
+  return now.second();
 }
 
 void logWithFlush(String msg) {

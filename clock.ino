@@ -67,11 +67,11 @@ void flipClock(int currentMinute) {
 
   //could also do both. it doesnt really matter as the coils counteract each other when energized in the wrong way
   if(currentMinute % 2 == 0) {
-    digitalWrite(controlPin1, HIGH)
-    digitalWrite(controlPin2, LOW)
+    digitalWrite(controlPin1, HIGH);
+    digitalWrite(controlPin2, LOW);
   } else {
-    digitalWrite(controlPin1, LOW)
-    digitalWrite(controlPin2, HIGH)
+    digitalWrite(controlPin1, LOW);
+    digitalWrite(controlPin2, HIGH);
   }
 
   digitalWrite(enablePin, LOW);

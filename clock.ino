@@ -1,4 +1,5 @@
 #include <Wire.h>
+#include <avr/sleep.h>
 #include "RTClib.h"
 #include "Ports.h"
 
@@ -9,9 +10,13 @@ ISR(WDT_vect) { Sleepy::watchdogEvent(); }
 
 int lastSeenMinute;
 int lastSeenSecond;
+bool interrupted = false;
+DateTime interruptedAt;
+
 #define controlPin1 8
 #define controlPin2 9
 #define enablePin 10
+#define interruptPin 2
 
 void setup() {
   Serial.begin(57600);
@@ -24,9 +29,12 @@ void setup() {
     RTC.adjust(DateTime(__DATE__, __TIME__));
   }
 
+  attachInterrupt(0, registerInterrupt, CHANGE);
+
   pinMode(enablePin, OUTPUT);
   pinMode(controlPin1, OUTPUT);
   pinMode(controlPin2, OUTPUT);
+  pinMode(controlPin2, INPUT);
 
   digitalWrite(enablePin, LOW);
   digitalWrite(controlPin1, LOW);
@@ -39,7 +47,7 @@ void setup() {
 void loop(){
   int currentMinute = getCurrentMinute();
   int currentSecond = getCurrentSecond();
-
+  /*Serial.println(digitalRead(interruptPin));*/
   logWithFlush(String(currentMinute));
   if (currentMinute - 1 == lastSeenMinute ) {
     flipClock(currentMinute);
@@ -47,14 +55,23 @@ void loop(){
 
   lastSeenMinute = currentMinute;
   lastSeenSecond = currentSecond;
-  sleepForAwhile(currentSecond);
+  if (!interrupted) {
+    sleepForAwhile(currentSecond);
+  }
+}
+
+void registerInterrupt() {
+  Serial.println("I feel interrupted!");
+  interruptedAt = RTC.now();
+  interrupted = true;
 }
 
 void sleepForAwhile(int second) {
   int sleepTime = (int)(1000 * (0.5 * (float) (60 - second)));
   logWithFlush(String(sleepTime));
   sleepTime = max(sleepTime, 1000);
-
+  // overwrite for the time being for testing
+  /*sleepTime = 1000;*/
   Sleepy::loseSomeTime(sleepTime);
 }
 

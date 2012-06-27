@@ -47,7 +47,6 @@ void setup() {
 void loop(){
   int currentMinute = getCurrentMinute();
   int currentSecond = getCurrentSecond();
-  /*Serial.println(digitalRead(interruptPin));*/
   logWithFlush(String(currentMinute));
   if (currentMinute - 1 == lastSeenMinute ) {
     flipClock(currentMinute);
@@ -71,7 +70,7 @@ void sleepForAwhile(int second) {
   logWithFlush(String(sleepTime));
   sleepTime = max(sleepTime, 1000);
   // overwrite for the time being for testing
-  /*sleepTime = 1000;*/
+  /*sleepTime = 3000;*/
   Sleepy::loseSomeTime(sleepTime);
 }
 

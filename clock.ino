@@ -19,7 +19,7 @@ DateTime interruptedAt;
 #define interruptPin 2
 
 void setup() {
-  Serial.begin(57600);
+  Serial.begin(9600);
   Wire.begin();
   RTC.begin();
   

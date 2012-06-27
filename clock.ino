@@ -68,6 +68,8 @@ void setup() {
   pinMode(waitOneHourPin   , INPUT);
   pinMode(skipOneMinutePin , INPUT);
   pinMode(waitOneMinutePin , INPUT);
+  buttonPresses.minutesToWait = 0;
+  buttonPresses.minutesToSkip = 0;
 }
 
 void loop(){
@@ -92,10 +94,23 @@ void loop(){
       interrupted      = false;
       interruptedAtSet = false;
     } else {
-      buttonPresses.minutesToWait = 4;
-      Serial.println(buttonPresses.minutesToWait);
-  
       //wait for those button presses
+      val = digitalRead(waitOneHourPin);
+      if (val == HIGH) {
+        buttonPresses.minutesToWait = buttonPresses.minutesToWait + 60;
+      }
+      val = digitalRead(skipOneHourPin);
+      if (val == HIGH) {
+        buttonPresses.minutesToSkip = buttonPresses.minutesToSkip + 60;
+      }
+      val = digitalRead(waitOneMinutePin);
+      if (val == HIGH) {
+        buttonPresses.minutesToWait = buttonPresses.minutesToWait + 1;
+      }
+      val = digitalRead(skipOneMinutePin);
+      if (val == HIGH) {
+        buttonPresses.minutesToWait = buttonPresses.minutesToSkip + 1;
+      }
     }
   }
 }

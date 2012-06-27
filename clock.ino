@@ -29,7 +29,7 @@ void setup() {
     RTC.adjust(DateTime(__DATE__, __TIME__));
   }
 
-  attachInterrupt(0, registerInterrupt, CHANGE);
+  attachInterrupt(0, registerInterrupt, FALLING);
 
   pinMode(enablePin, OUTPUT);
   pinMode(controlPin1, OUTPUT);

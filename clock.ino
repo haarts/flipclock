@@ -42,9 +42,9 @@ void setup() {
   pinMode(hBridgeControlPin2 , OUTPUT);
   pinMode(interruptPin       , INPUT);
 
-  digitalWrite(enablePin   , LOW);
-  digitalWrite(controlPin1 , LOW);
-  digitalWrite(controlPin2 , LOW);
+  digitalWrite(hBridgeEnablePin   , LOW);
+  digitalWrite(hBridgeControlPin1 , LOW);
+  digitalWrite(hBridgeControlPin2 , LOW);
 
   lastSeenMinute = getCurrentMinute();
   lastSeenSecond = getCurrentSecond();

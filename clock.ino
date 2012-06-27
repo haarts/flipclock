@@ -16,11 +16,11 @@ DateTime interruptedAt;
 bool interruptedAtSet = false;
 
 // control pin 1 of the SN754410NE IC
-#define controlPin1 8
+#define hBridgeControlPin1 8
 // control pin 2 of the SN754410NE IC
-#define controlPin2 9
+#define hBridgeControlPin2 9
 // off/on pin of the SN754410NE IC
-#define enablePin 10
+#define hBridgeEnablePin 10
 // listening pin to go in to clock programming mode
 #define interruptPin 2
 
@@ -37,14 +37,14 @@ void setup() {
 
   attachInterrupt(0, registerInterrupt, FALLING);
 
-  pinMode(enablePin, OUTPUT);
-  pinMode(controlPin1, OUTPUT);
-  pinMode(controlPin2, OUTPUT);
-  pinMode(controlPin2, INPUT);
+  pinMode(hBridgeEnablePin   , OUTPUT);
+  pinMode(hBridgeControlPin1 , OUTPUT);
+  pinMode(hBridgeControlPin2 , OUTPUT);
+  pinMode(interruptPin       , INPUT);
 
-  digitalWrite(enablePin, LOW);
-  digitalWrite(controlPin1, LOW);
-  digitalWrite(controlPin2, LOW);
+  digitalWrite(enablePin   , LOW);
+  digitalWrite(controlPin1 , LOW);
+  digitalWrite(controlPin2 , LOW);
 
   lastSeenMinute = getCurrentMinute();
   lastSeenSecond = getCurrentSecond();

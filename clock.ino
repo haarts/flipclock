@@ -62,7 +62,7 @@ void loop(){
 
 void registerInterrupt() {
   Serial.println("I feel interrupted!");
-  interruptedAt = RTC.now();
+  delay(50);
   interrupted = true;
 }
 

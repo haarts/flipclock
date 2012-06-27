@@ -15,6 +15,11 @@ volatile bool interrupted = false;
 DateTime interruptedAt;
 bool interruptedAtSet = false;
 
+struct ButtonPresses {
+  int minutesToWait;
+  int minutesToSkip;
+};
+
 // control pin 1 of the SN754410NE IC
 #define hBridgeControlPin1 8
 // control pin 2 of the SN754410NE IC

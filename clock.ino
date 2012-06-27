@@ -74,7 +74,6 @@ void loop(){
     } else {
       //wait for those button presses
     }
-
   }
 }
 

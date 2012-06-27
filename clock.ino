@@ -15,9 +15,13 @@ volatile bool interrupted = false;
 DateTime interruptedAt;
 bool interruptedAtSet = false;
 
+// control pin 1 of the SN754410NE IC
 #define controlPin1 8
+// control pin 2 of the SN754410NE IC
 #define controlPin2 9
+// off/on pin of the SN754410NE IC
 #define enablePin 10
+// listening pin to go in to clock programming mode
 #define interruptPin 2
 
 void setup() {
@@ -69,6 +73,7 @@ void loop(){
       interruptedAtSet = false;
     }
     //wait for those button presses
+
   }
 }
 

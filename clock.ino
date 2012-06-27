@@ -77,6 +77,10 @@ void loop(){
   }
 }
 
+bool isOlderThenTenSeconds(start, current) {
+  return true;
+}
+
 void registerInterrupt() {
   static unsigned long last_interrupt_time = 0;
   unsigned long interrupt_time = millis();

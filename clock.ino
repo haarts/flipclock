@@ -95,20 +95,21 @@ void loop(){
       interruptedAtSet = false;
     } else {
       //wait for those button presses
+      int val;
       val = digitalRead(waitOneHourPin);
-      if (val == HIGH) {
+      if (val == LOW) {
         buttonPresses.minutesToWait = buttonPresses.minutesToWait + 60;
       }
       val = digitalRead(skipOneHourPin);
-      if (val == HIGH) {
+      if (val == LOW) {
         buttonPresses.minutesToSkip = buttonPresses.minutesToSkip + 60;
       }
       val = digitalRead(waitOneMinutePin);
-      if (val == HIGH) {
+      if (val == LOW) {
         buttonPresses.minutesToWait = buttonPresses.minutesToWait + 1;
       }
       val = digitalRead(skipOneMinutePin);
-      if (val == HIGH) {
+      if (val == LOW) {
         buttonPresses.minutesToWait = buttonPresses.minutesToSkip + 1;
       }
     }

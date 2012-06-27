@@ -157,16 +157,28 @@ void logWithFlush(String msg) {
 }
 
 void flipClock(int currentMinute) {
-  digitalWrite(hBridgeEnablePin, HIGH);
-
-  //could also do both. it doesnt really matter as the coils counteract each other when energized in the wrong way
-  if(currentMinute % 2 == 0) {
-    digitalWrite(hBridgeControlPin1, HIGH);
-    digitalWrite(hBridgeControlPin2, LOW);
+  if (waitsRequired) {
+    buttonPresses.minutesToWait -= 1;
   } else {
-    digitalWrite(hBridgeControlPin1, LOW);
-    digitalWrite(hBridgeControlPin2, HIGH);
-  }
+    digitalWrite(hBridgeEnablePin, HIGH);
 
-  digitalWrite(hBridgeEnablePin, LOW);
+    //could also do both. it doesnt really matter as the coils counteract each other when energized in the wrong way
+    if(currentMinute % 2 == 0) {
+      digitalWrite(hBridgeControlPin1, HIGH);
+      digitalWrite(hBridgeControlPin2, LOW);
+    } else {
+      digitalWrite(hBridgeControlPin1, LOW);
+      digitalWrite(hBridgeControlPin2, HIGH);
+    }
+
+    digitalWrite(hBridgeEnablePin, LOW);
+  }
+}
+
+bool waitsRequired() {
+  if (buttonPresses.minutesToWait != 0) {
+    return true;
+  } else {
+    return false;
+  }
 }

@@ -10,8 +10,10 @@ ISR(WDT_vect) { Sleepy::watchdogEvent(); }
 
 int lastSeenMinute;
 int lastSeenSecond;
+
 volatile bool interrupted = false;
 DateTime interruptedAt;
+bool interruptedAtSet = false;
 
 #define controlPin1 8
 #define controlPin2 9
@@ -54,12 +56,19 @@ void loop(){
 
   lastSeenMinute = currentMinute;
   lastSeenSecond = currentSecond;
+
   if (!interrupted) {
     sleepForAwhile(currentSecond);
   } else {
-    interrupted = false;
-    //can't read the RTC in the interrupt handler. This will hang
-    interruptedAt = RTC.now();
+    if (!interruptedAtSet) {
+      interruptedAtSet = true;
+      interruptedAt    = RTC.now();
+    }
+    if (isOlderThenTenSeconds(interruptedAt, RTC.now())) {
+      interrupted      = false;
+      interruptedAtSet = false;
+    }
+    //wait for those button presses
   }
 }
 

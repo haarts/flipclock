@@ -55,10 +55,11 @@ void loop(){
   lastSeenMinute = currentMinute;
   lastSeenSecond = currentSecond;
   if (!interrupted) {
+    sleepForAwhile(currentSecond);
+  } else {
     interrupted = false;
     //can't read the RTC in the interrupt handler. This will hang
     interruptedAt = RTC.now();
-    sleepForAwhile(currentSecond);
   }
 }
 

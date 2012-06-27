@@ -10,7 +10,7 @@ ISR(WDT_vect) { Sleepy::watchdogEvent(); }
 
 int lastSeenMinute;
 int lastSeenSecond;
-bool interrupted = false;
+volatile bool interrupted = false;
 DateTime interruptedAt;
 
 #define controlPin1 8

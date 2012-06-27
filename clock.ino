@@ -63,9 +63,14 @@ void loop(){
 }
 
 void registerInterrupt() {
-  Serial.println("I feel interrupted!");
-  delay(50);
-  interrupted = true;
+  static unsigned long last_interrupt_time = 0;
+  unsigned long interrupt_time = millis();
+
+  if (interrupt_time - last_interrupt_time > 200) {
+    Serial.println("I feel interrupted!");
+    interrupted = true;
+  }
+  last_interrupt_time = interrupt_time;
 }
 
 void sleepForAwhile(int second) {

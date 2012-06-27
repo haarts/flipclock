@@ -71,8 +71,9 @@ void loop(){
     if (isOlderThenTenSeconds(interruptedAt, RTC.now())) {
       interrupted      = false;
       interruptedAtSet = false;
+    } else {
+      //wait for those button presses
     }
-    //wait for those button presses
 
   }
 }

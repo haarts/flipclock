@@ -15,10 +15,15 @@ volatile bool interrupted = false;
 DateTime interruptedAt;
 bool interruptedAtSet = false;
 
-struct ButtonPresses {
+#define skipOneHourPin 3
+#define waitOneHourPin 4
+#define skipOneMinutePin 5
+#define waitOneMinutePin 6
+
+struct {
   int minutesToWait;
   int minutesToSkip;
-};
+} buttonPresses;
 
 // control pin 1 of the SN754410NE IC
 #define hBridgeControlPin1 8
@@ -31,28 +36,38 @@ struct ButtonPresses {
 
 void setup() {
   Serial.begin(9600);
+
+  //Set up clock
   Wire.begin();
   RTC.begin();
-  
+
   if( !RTC.isrunning()){
     Serial.println("RTC is NOT running!");
     // following line sets the RTC to the date & time this sketch was compiled
     RTC.adjust(DateTime(__DATE__, __TIME__));
   }
 
-  attachInterrupt(0, registerInterrupt, FALLING);
+  lastSeenMinute = getCurrentMinute();
+  lastSeenSecond = getCurrentSecond();
 
+  //set up interrupt
+  attachInterrupt(0, registerInterrupt, FALLING);
+  pinMode(interruptPin       , INPUT);
+
+  //set up hBridge
   pinMode(hBridgeEnablePin   , OUTPUT);
   pinMode(hBridgeControlPin1 , OUTPUT);
   pinMode(hBridgeControlPin2 , OUTPUT);
-  pinMode(interruptPin       , INPUT);
 
   digitalWrite(hBridgeEnablePin   , LOW);
   digitalWrite(hBridgeControlPin1 , LOW);
   digitalWrite(hBridgeControlPin2 , LOW);
 
-  lastSeenMinute = getCurrentMinute();
-  lastSeenSecond = getCurrentSecond();
+  //set up clock manipulating pins
+  pinMode(skipOneHourPin   , INPUT);
+  pinMode(waitOneHourPin   , INPUT);
+  pinMode(skipOneMinutePin , INPUT);
+  pinMode(waitOneMinutePin , INPUT);
 }
 
 void loop(){
@@ -77,12 +92,15 @@ void loop(){
       interrupted      = false;
       interruptedAtSet = false;
     } else {
+      buttonPresses.minutesToWait = 4;
+      Serial.println(buttonPresses.minutesToWait);
+  
       //wait for those button presses
     }
   }
 }
 
-bool isOlderThenTenSeconds(start, current) {
+bool isOlderThenTenSeconds(DateTime startTime, DateTime currentTime) {
   return true;
 }
 

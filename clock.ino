@@ -117,7 +117,11 @@ void loop(){
 }
 
 bool isOlderThenTenSeconds(DateTime startTime, DateTime currentTime) {
-  return true;
+  if(currentTime - startTime > 10) {
+    return true
+  } else {
+    return false
+  }
 }
 
 void registerInterrupt() {

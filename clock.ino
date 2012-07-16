@@ -117,10 +117,10 @@ void loop(){
 }
 
 bool isOlderThenTenSeconds(DateTime startTime, DateTime currentTime) {
-  if(currentTime - startTime > 10) {
-    return true
+  if(currentTime.unixtime() - startTime.unixtime() > 10) {
+    return true;
   } else {
-    return false
+    return false;
   }
 }
 
@@ -161,7 +161,7 @@ void logWithFlush(String msg) {
 }
 
 void flipClock(int currentMinute) {
-  if (waitsRequired) {
+  if (waitsRequired()) {
     buttonPresses.minutesToWait -= 1;
   } else {
     digitalWrite(hBridgeEnablePin, HIGH);

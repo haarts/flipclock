@@ -76,6 +76,7 @@ void loop(){
   int currentMinute = getCurrentMinute();
   int currentSecond = getCurrentSecond();
   logWithFlush(String(currentMinute));
+  /*flipClock(currentMinute);*/
   if (currentMinute - 1 == lastSeenMinute ) {
     flipClock(currentMinute);
   }
@@ -125,7 +126,7 @@ bool isOlderThenTenSeconds(DateTime startTime, DateTime currentTime) {
 }
 
 void registerInterrupt() {
-  static unsigned long last_interrupt_time = 0;
+  static unsigned long last_interrupt_time = 0; //this var is, between function calls not forgotten/out of scope
   unsigned long interrupt_time = millis();
 
   if (interrupt_time - last_interrupt_time > 200) {
@@ -162,8 +163,10 @@ void logWithFlush(String msg) {
 
 void flipClock(int currentMinute) {
   if (waitsRequired()) {
+    logWithFlush("waiting");
     buttonPresses.minutesToWait -= 1;
   } else {
+    logWithFlush("powering splines");
     digitalWrite(hBridgeEnablePin, HIGH);
 
     //could also do both. it doesnt really matter as the coils counteract each other when energized in the wrong way
@@ -174,8 +177,9 @@ void flipClock(int currentMinute) {
       digitalWrite(hBridgeControlPin1, LOW);
       digitalWrite(hBridgeControlPin2, HIGH);
     }
-
+    delay(500);
     digitalWrite(hBridgeEnablePin, LOW);
+    logWithFlush("decoupling power");
   }
 }
 

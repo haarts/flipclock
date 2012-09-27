@@ -184,6 +184,8 @@ void flipClock(int currentMinute) {
 }
 
 bool waitsRequired() {
+  return false;
+  Serial.println(buttonPresses.minutesToWait);
   if (buttonPresses.minutesToWait != 0) {
     return true;
   } else {

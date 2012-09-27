@@ -41,7 +41,7 @@ void setup() {
   Wire.begin();
   RTC.begin();
 
-  if( !RTC.isrunning()){
+  if( !RTC.isrunning() ){
     Serial.println("RTC is NOT running!");
     // following line sets the RTC to the date & time this sketch was compiled
     RTC.adjust(DateTime(__DATE__, __TIME__));
@@ -52,7 +52,7 @@ void setup() {
 
   //set up interrupt
   attachInterrupt(0, registerInterrupt, FALLING);
-  pinMode(interruptPin       , INPUT);
+  pinMode(interruptPin, INPUT);
 
   //set up hBridge
   pinMode(hBridgeEnablePin   , OUTPUT);
@@ -75,7 +75,7 @@ void setup() {
 void loop(){
   int currentMinute = getCurrentMinute();
   int currentSecond = getCurrentSecond();
-  logWithFlush(String(currentMinute));
+  logWithFlush("Current minute: " + String(currentMinute));
   /*flipClock(currentMinute);*/
   if (currentMinute - 1 == lastSeenMinute ) {
     flipClock(currentMinute);
@@ -138,7 +138,7 @@ void registerInterrupt() {
 
 void sleepForAwhile(int second) {
   int sleepTime = (int)(1000 * (0.5 * (float) (60 - second)));
-  logWithFlush(String(sleepTime));
+  logWithFlush("Sleeptime: " + String(sleepTime));
   sleepTime = max(sleepTime, 1000);
   // overwrite for the time being for testing
   /*sleepTime = 3000;*/

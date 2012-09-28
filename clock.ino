@@ -77,7 +77,7 @@ void loop(){
   int currentSecond = getCurrentSecond();
   logWithFlush("Current minute: " + String(currentMinute));
   /*flipClock(currentMinute);*/
-  if (currentMinute - 1 == lastSeenMinute ) {
+  if (currentMinute != lastSeenMinute )
     flipClock(currentMinute);
   }
 
